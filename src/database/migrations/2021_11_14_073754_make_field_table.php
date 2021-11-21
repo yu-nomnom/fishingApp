@@ -14,12 +14,12 @@ class MakeFieldTable extends Migration
     {
         Schema::create('field', function (Blueprint $table) {
             $table->bigIncrements('id');    
-            $table->string('field_name', 200);
-            $table->string('prefecture');
-            $table->timestamp('created');
-            $table->string('created_user_id');
-            $table->timestamp('modified');
-            $table->string('modified_user_id');
+            $table->string('field_name', 200)->comment('フィールド名');
+            $table->string('prefecture')->comment('都道府県');
+            $table->timestamp('created')->comment('作成時間');
+            $table->string('created_user_id')->comment('作成者');
+            $table->timestamp('modified')->comment('変更時間');
+            $table->string('modified_user_id')->comment('変更者');
             $table->softDeletes();
         });
     }
