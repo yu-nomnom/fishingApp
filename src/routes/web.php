@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'ListController@list');
+Route::get('/list', 'ListController@list');
+
+Route::get('/diary/create', 'DiaryController@create');

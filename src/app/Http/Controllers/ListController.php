@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Request;
 
-class ListController extends BaseController
+class ListController extends Controller
 {
     /**
      * 一覧画面表示用
