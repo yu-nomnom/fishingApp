@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class MakeDiaryTable extends Migration
 {
     /**
-     * diaryテーブルを作成
+     * diariesテーブルを作成
      * @return void
      */
     public function up()
