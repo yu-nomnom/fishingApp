@@ -12,5 +12,5 @@
 </template>
 
 <script>
-    
+    console.log('aaa');
 </script>

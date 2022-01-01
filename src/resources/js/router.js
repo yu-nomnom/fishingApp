@@ -1,11 +1,7 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
- 
-Vue.use(VueRouter);
- 
+import Router from 'vue-router'
 import createDiary from "./components/CreateDiary.vue";
  
-const router = new VueRouter({
+export default new Router({
     mode: "history",
     routes: [
         {
@@ -15,5 +11,3 @@ const router = new VueRouter({
         }
     ]
 });
- 
-export default router;

@@ -1,14 +1,14 @@
 require('./bootstrap');
 
-window.Vue = require('vue');
-
 import Vue from "vue";
-import router from "./router";
+import VueRouter from 'vue-router';
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('create-diary', require('./components/CreateDiary.vue').default);
+import router from './router';
+
+window.Vue = Vue;
+Vue.use(VueRouter);
 
 const app = new Vue({
     el: '#app',
-    router: router
+    router
 });
