@@ -11,7 +11,6 @@
 <body>
     <div id="app">
         <div id="nav">
-          <router-link to="/">createDiary</router-link>
         </div>
         <router-view/>
     </div>
