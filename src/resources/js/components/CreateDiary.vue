@@ -63,12 +63,18 @@
                     <label for="consideration">詳細</label>
                     <textarea name="consideration" class="form-control" id="consideration" rows="10"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">ボタン</button>
+                <button type="button" class="btn btn-primary" @click="regist()">ボタン</button>
             </form>
         </div>
     </div>
 </template>
 
 <script>
-
+export default {
+    methods: {
+        regist: function() {
+            return alert('Hello Vue!');
+        }
+    }
+}
 </script>
