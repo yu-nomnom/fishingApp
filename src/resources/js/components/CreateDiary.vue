@@ -69,11 +69,23 @@
     </div>
 </template>
 
+<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+
 <script>
 export default {
+
     methods: {
-        regist: function() {
-            return alert('Hello Vue!');
+        window:onload = function(){
+            axios.post('/api/diary_create_item')
+                .then((res) => {
+                    console.log('aaaa');
+                });
+        },
+        regist() {
+            axios.post('/api/diary_regist')
+                .then((res) => {
+                    console.log('bbbb');
+                });
         }
     }
 }

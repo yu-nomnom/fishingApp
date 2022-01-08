@@ -5,7 +5,7 @@ export default new Router({
     mode: "history",
     routes: [
         {
-            path: "/create-diary",
+            path: "/diary/create",
             name: "create-diary",
             component: createDiary
         }
