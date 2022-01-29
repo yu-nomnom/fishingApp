@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FishingContent extends Model
+class Field extends Model
 {
-    protected $table = 'fishing_contents';
+    protected $table = 'field';
     protected $guarded = 'id';
 
     const CREATED_AT = 'created';

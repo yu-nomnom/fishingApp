@@ -7,16 +7,19 @@
                     <input type="text" name="dairy[title]" class="form-control" id="title" placeholder="この日の釣りの題名を入力">
                 </div>
                 <div>
+                    <p>
+                        {{ aaa }} 
+                    </p>
+                </div>
+                <div>
                     <label>釣り日時</label>
                     <input type="datetime-local" name="dairy[start_time]" class="form-control" id="start_time" placeholder="釣り開始日時">
                     <input type="datetime-local" name="dairy[end_time]" class="form-control" id="end_time" placeholder="釣り終了日時">
                 </div>
                 <div>
-                    <label for="field">釣り場</label>
-                    <select name="field" class="form-control" id="field">
-                        <option value="伊庭内湖">伊庭内湖</option>
-                        <option value="油ヶ淵">油ヶ淵</option>
-                        <option value="その他">その他</option>
+                    <label>釣り場</label>
+                    <select name="field" v-model="selected" class="form-control">
+                        <option v-for="field in fieldList" :key="field" :value="field"></option>
                     </select>
                 </div>
                 <div>
@@ -73,12 +76,25 @@
 
 <script>
 export default {
-
+    data : {
+        weatherList : 'cccc',
+        seasonList : [],
+        tideList : [],
+        fieldList : [],
+        aaa : 'nomura'
+    },
     methods: {
         window:onload = function(){
-            axios.post('/api/diary_create_item')
+            console.log(this.weatherList);
+            axios.get('/api/diary_create_item')
                 .then((res) => {
-                    console.log('aaaa');
+                    console.log(this.weatherList);
+                    var dataList = res['data'];
+                    this.weatherList = dataList['weatherList'];
+                    this.seasonList = dataList['seasonList'];
+                    this.tideList = dataList['tideList'];
+                    this.fieldList = dataList['fieldList'];
+                    console.log(this.weatherList);
                 });
         },
         regist() {
