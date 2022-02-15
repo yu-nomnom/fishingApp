@@ -7,11 +7,6 @@
                     <input type="text" name="dairy[title]" class="form-control" id="title" placeholder="この日の釣りの題名を入力">
                 </div>
                 <div>
-                    <p>
-                        {{ aaa }} 
-                    </p>
-                </div>
-                <div>
                     <label>釣り日時</label>
                     <input type="datetime-local" name="dairy[start_time]" class="form-control" id="start_time" placeholder="釣り開始日時">
                     <input type="datetime-local" name="dairy[end_time]" class="form-control" id="end_time" placeholder="釣り終了日時">
@@ -76,27 +71,26 @@
 
 <script>
 export default {
-    data : {
-        weatherList : 'cccc',
-        seasonList : [],
-        tideList : [],
-        fieldList : [],
-        aaa : 'nomura'
+    data()  {
+        return {
+            weatherList : [],
+            seasonList : [],
+            tideList : [],
+            fieldList : []
+        }
+    },
+    mounted() {
+        window.onload = ()=>{
+            axios.get('/api/diary_create_item').then((res) => {
+                var dataList = res['data'];
+                this.weatherList = dataList['weatherList'];
+                this.seasonList = dataList['seasonList'];
+                this.tideList = dataList['tideList'];
+                this.fieldList = dataList['fieldList'];
+            });
+        }
     },
     methods: {
-        window:onload = function(){
-            console.log(this.weatherList);
-            axios.get('/api/diary_create_item')
-                .then((res) => {
-                    console.log(this.weatherList);
-                    var dataList = res['data'];
-                    this.weatherList = dataList['weatherList'];
-                    this.seasonList = dataList['seasonList'];
-                    this.tideList = dataList['tideList'];
-                    this.fieldList = dataList['fieldList'];
-                    console.log(this.weatherList);
-                });
-        },
         regist() {
             axios.post('/api/diary_regist')
                 .then((res) => {
