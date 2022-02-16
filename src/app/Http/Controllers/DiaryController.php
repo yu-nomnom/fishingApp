@@ -43,7 +43,7 @@ class DiaryController extends Controller
      */
     public function regist(Request $request)
     {
-        Log::debug('regist');
+        Log::debug($request);
         return;
     }
 }
