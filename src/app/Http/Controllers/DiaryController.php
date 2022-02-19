@@ -48,9 +48,9 @@ class DiaryController extends Controller
      */
     public function regist(Request $request)
     {
-        $dairyData = $request['dairyData'];
-        $dairyData = $this->registDiaryService->formatRegisterData($dairyData);
-        $this->registDiaryService->insertDiary($dairyData);
+        $diaryData = $request['dairyData'];
+        $diaryData = $this->registDiaryService->formatRegisterData($diaryData);
+        $this->registDiaryService->createDiary($diaryData);
         return;
     }
 }

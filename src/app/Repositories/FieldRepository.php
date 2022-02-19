@@ -2,18 +2,19 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Field;
 use Illuminate\Support\Facades\Log;
 
 class FieldRepository implements Interfaces\FieldRepositoryInterface
 {
     /**
      * 全釣り場リストの取得
-     * @return array $fieldList 釣り場リスト
+     * @return array 釣り場リスト
      */
     public function getAllField()
     {
-        return DB::table('field')->whereNull('deleted_at')
-                                 ->pluck('field_name');
+        return Field::whereNull('deleted_at')
+                      ->pluck('field_name', 'id')
+                      ->toArray();
     }
 }

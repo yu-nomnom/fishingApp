@@ -12,27 +12,27 @@
                     <input v-model="dairyData.end_time" type="datetime-local" name="end_time" class="form-control" id="end_time" placeholder="釣り終了日時">
                 </div>
                 <div>
-                    <label for="field">釣り場</label>
-                    <select name="field" v-model="dairyData.field" class="form-control">
-                        <option v-for="field in fieldList" :key="field" :value="field">{{field}}</option>
+                    <label>釣り場</label>
+                    <select v-model="dairyData.field_id" class="form-control">
+                        <option v-for="(field, id) in fieldList" :key="id" :value="id">{{field}}</option>
                     </select>
                 </div>
                 <div>
-                    <label for="season">季節</label>
+                    <label>季節</label>
                     <select name="season" v-model="dairyData.season" class="form-control">
                         <option v-for="season in seasonList" :key="season" :value="season">{{season}}</option>
                     </select>
                 </div>
                 <div>
-                    <label for="weather">天気</label>
+                    <label>天気</label>
                     <select name="weather" v-model="dairyData.weather" class="form-control">
                         <option v-for="weather in weatherList" :key="weather" :value="weather">{{weather}}</option>
                     </select>
                 </div>
                 <div>
                     <label>気温</label>
-                    <input v-model="dairyData.lowest_temperature" type="number" name="lowest_temperature" class="form-control" id="lowest_temperature" placeholder="最低気温(℃)">
-                    <input v-model="dairyData.highest_temperature" type="number" name="highest_temperature" class="form-control" id="highest_temperature" placeholder="最高気温(℃)">
+                    <input v-model="dairyData.lowest_temperature" type="number"  class="form-control" id="lowest_temperature" placeholder="最低気温(℃)">
+                    <input v-model="dairyData.highest_temperature" type="number" class="form-control" id="highest_temperature" placeholder="最高気温(℃)">
                 </div>
                 <div>
                     <label>水位</label>
@@ -69,7 +69,7 @@ export default {
                 title: '',
                 start_time: '',
                 end_time: '',
-                field: '',
+                field_id: '',
                 season: '',
                 weather: '',
                 lowest_temperature: '',

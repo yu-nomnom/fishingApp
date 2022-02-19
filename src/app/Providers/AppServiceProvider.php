@@ -21,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Interfaces\FieldRepositoryInterface::class,
             \App\Repositories\FieldRepository::class,
         );
+        $this->app->bind(
+            \App\Repositories\Interfaces\DiaryRepositoryInterface::class,
+            \App\Repositories\DiaryRepository::class
+        );
     }
 
     /**
