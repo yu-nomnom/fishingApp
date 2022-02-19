@@ -26,12 +26,8 @@ class RegistDiaryService
      */
     public function formatRegisterData(array $diaryData)
     {
+        Log::debug($diaryData);
         $dateTime = Carbon::now()->format('Y-m-d H:i:s');
-
-        $diaryData['lowest_temperature'] = (int)$diaryData['lowest_temperature'];
-        $diaryData['highest_temperature'] = (int)$diaryData['highest_temperature'];
-        $diaryData['lowest_water_level'] = (int)$diaryData['lowest_water_level'];
-        $diaryData['highest_water_level'] = (int)$diaryData['highest_water_level'];
 
         $diaryData += [
             'fish_result_id' => 1, //後で修正

@@ -35,9 +35,14 @@
                     <input v-model="dairyData.highest_temperature" type="number" class="form-control" id="highest_temperature" placeholder="最高気温(℃)">
                 </div>
                 <div>
+                    <label>水温</label>
+                    <input v-model="dairyData.lowest_water_temperature" type="number"  class="form-control" id="lowest_temperature" placeholder="最低水温(℃)">
+                    <input v-model="dairyData.highest_water_temperature" type="number" class="form-control" id="highest_temperature" placeholder="最高水温(℃)">
+                </div>
+                <div>
                     <label>水位</label>
-                    <input v-model="dairyData.lowest_water_level" type="number" name="lowest_water_level" class="form-control" id="lowest_water_level" placeholder="最低水位(cm)">
-                    <input v-model="dairyData.highest_water_level" type="number" name="highest_water_level" class="form-control" id="highest_water_level" placeholder="最高水位(cm)">
+                    <input v-model="dairyData.start_water_level" type="number" class="form-control" id="start_water_level" placeholder="開始水位(cm)">
+                    <input v-model="dairyData.end_water_level" type="number" class="form-control" id="end_water_level" placeholder="終了水位(cm)">
                 </div>
                 <div>
                     <label for="tide">潮</label>
@@ -69,13 +74,15 @@ export default {
                 title: '',
                 start_time: '',
                 end_time: '',
-                field_id: '',
+                field_id: null,
                 season: '',
                 weather: '',
-                lowest_temperature: '',
-                highest_temperature: '',
-                lowest_water_level: '',
-                highest_water_level: '',
+                lowest_temperature: null,
+                highest_temperature: null,
+                lowest_water_temperature: null,
+                highest_water_temperature: null,
+                start_water_level: null,
+                end_water_level: null,
                 tide: '',
                 competition_flg: false,
                 consideration: '',
