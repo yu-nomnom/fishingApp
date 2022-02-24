@@ -25,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Interfaces\DiaryRepositoryInterface::class,
             \App\Repositories\DiaryRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Interfaces\FishResultRepositoryInterface::class,
+            \App\Repositories\FishResultRepositoryInterface::class
+        );
     }
 
     /**

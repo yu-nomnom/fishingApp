@@ -15,7 +15,6 @@ class DiaryRepository implements Interfaces\DiaryRepositoryInterface
      */
     public function createDiary(array $diaryData)
     {
-        Log::debug('createDiary');
         return Diary::create($diaryData);
     }
 }
