@@ -54,6 +54,7 @@
                     <input v-model="dairyData.competition_flg" class="form-check-input" type="checkbox" id="competition_flg">
                     <label class="form-check-label">試合フラグ</label>
                 </div>
+                <FishResult />
                 <div class="form-group">
                     <label>詳細</label>
                     <textarea v-model="dairyData.consideration" class="form-control" id="consideration" rows="10"></textarea>
@@ -67,7 +68,9 @@
 <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
 
 <script>
+import FishResult from "./FishResult.vue";
 export default {
+    components: { FishResult },
     data()  {
         return {
             dairyData: {
@@ -90,7 +93,8 @@ export default {
             weatherList : [],
             seasonList : [],
             tideList : [],
-            fieldList : []
+            fieldList : [],
+            forms: []
         }
     },
     mounted() {
