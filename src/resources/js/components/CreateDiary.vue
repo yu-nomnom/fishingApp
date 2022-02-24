@@ -110,12 +110,12 @@ export default {
     },
     methods: {
         checkCompetitionFlg() {
-            console.log('checkCompetitionFlg');
             this.dairyData.competition_flg = true;
         },
         regist() {
             axios.post('/api/diary_regist', {
-                dairyData: this.dairyData 
+                dairyData:  this.dairyData,
+                fishResult: this.fishResult
             })
             .then((res) => {
                 console.log('bbbb');

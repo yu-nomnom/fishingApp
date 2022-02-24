@@ -6,6 +6,9 @@ use App\Repositories\Interfaces\DiaryRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
 
+/**
+ * 日記の登録機能に関するクラス
+ */
 class RegistDiaryService
 {
     private DiaryRepositoryInterface $diaryRepository;
@@ -26,9 +29,7 @@ class RegistDiaryService
      */
     public function formatRegisterData(array $diaryData)
     {
-        Log::debug($diaryData);
         $dateTime = Carbon::now()->format('Y-m-d H:i:s');
-
         $diaryData += [
             'fish_result_id' => 1, //後で修正
             'created' => $dateTime,
@@ -36,7 +37,7 @@ class RegistDiaryService
             'modified' => $dateTime,
             'modified_user_id' => 'yusuke' //後でユーザーを使用するように変更
         ];
-        Log::debug($diaryData);
+
         return $diaryData;
     }
 
