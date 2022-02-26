@@ -2,16 +2,19 @@
 
 namespace App\Http\Services;
 
+use App\Repositories\Interfaces\FishResultRepositoryInterface;
 use Illuminate\Support\Carbon;
 
 class FishResultService {
 
-    /**
-     * 
-     */
-    public function __construct ()
-    {
+    private FishResultRepositoryInterface $fishResultRepository;
 
+    /**
+     * @var FishResultRepositoryInterface $fishResultRepository
+     */
+    public function __construct (FishResultRepositoryInterface $fishResultRepository)
+    {
+        $this->fishResultRepository = $fishResultRepository;
     }
 
     /**
@@ -28,10 +31,11 @@ class FishResultService {
         foreach (array_keys($fishResultData) as $key) {
             $fishResultData[$key] += [
                 'diary_id' => $diaryId,
+                'point_id' => null,
                 'created' => $dateTime,
-                'created_user_id' => 'yusuke',
+                'created_user_id' => 'yusuke', //後で変更
                 'modified' => $dateTime,
-                'modified_user_id' => 'yusuke'
+                'modified_user_id' => 'yusuke' //後で変更
             ];
         }
 

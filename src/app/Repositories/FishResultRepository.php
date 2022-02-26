@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Field;
-use Illuminate\Support\Facades\Log;
+use App\Models\FishResult;
 
 class FishResultRepository implements Interfaces\FishResultRepositoryInterface
 {
@@ -11,11 +10,11 @@ class FishResultRepository implements Interfaces\FishResultRepositoryInterface
      * 釣果情報の新規登録
      * 
      * @param array $fishReultData
-     * @return object
+     * @return boolean
      */
-    public function createFishResult (array $fishReultData)
+    public function insertFishResult (array $fishReultData)
     {
-        
+        return FishResult::insert($fishReultData);
     }
     
 }

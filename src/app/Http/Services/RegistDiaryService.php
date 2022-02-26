@@ -2,23 +2,35 @@
 
 namespace App\Http\Services;
 
+use App\Http\Services\FishResultService;
 use App\Repositories\Interfaces\DiaryRepositoryInterface;
+use App\Repositories\Interfaces\FishResultRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use PhpParser\Node\Stmt\TryCatch;
 
 /**
  * 日記の登録機能に関するクラス
  */
 class RegistDiaryService
 {
+    private FishResultService $fishResultService;
     private DiaryRepositoryInterface $diaryRepository;
+    private FishResultRepositoryInterface $fishResultRepository;
 
     /**
+     * @var FishResultService $fishResultService
      * @var DiaryRepositoryInterface $diaryRepository
+     * @var FishResultRepositoryInterface $fishResultRepository
      */
-    public function __construct(DiaryRepositoryInterface $diaryRepository)
-    {
+    public function __construct(
+        FishResultService $fishResultService,
+        DiaryRepositoryInterface $diaryRepository,
+        FishResultRepositoryInterface $fishResultRepository
+    ) {
+        $this->fishResultService = $fishResultService;
         $this->diaryRepository = $diaryRepository;
+        $this->fishResultRepository = $fishResultRepository;
     }
 
     /**
@@ -42,13 +54,25 @@ class RegistDiaryService
     }
 
     /**
-     * 日記新規保存処理
+     * 日記(釣果含む)新規保存処理
      * 
      * @param array $diaryData 日記作成用データ
+     * @param array $fishResultData 釣り日記用データ
+     * @return json
      */
-    public function createDiary(array $diaryData)
+    public function createDiary(array $diaryData, array $fishResultData)
     {
-        return $this->diaryRepository->createDiary($diaryData);
+        try {
+            $diaryData = $this->formatRegisterData($diaryData);
+            $result = $this->diaryRepository->createDiary($diaryData);
+            $fishResultData = $this->fishResultService->formatRegisterData($fishResultData, $result->id);
+            $success = $this->fishResultRepository->insertFishResult($fishResultData);
+            if ($success) {
+                
+            }
+        } catch (\Exception $e) {
+            //失敗jsonメッセージ
+        }
     }
 
     /**

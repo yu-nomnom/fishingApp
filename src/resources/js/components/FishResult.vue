@@ -31,7 +31,7 @@
                 釣れた時間
                 </div>
                 <div class="form-component_content">
-                    <input v-model="result.caught_time" type="time" class="form-control">
+                    <input v-model="result.catch_time" type="time" class="form-control">
                 </div>
             </div>
         </div>
@@ -41,19 +41,16 @@
 </template>
 <script>
 export default ({
-    data () {
-        return {
-            fishResult : [],
-        }
-    },
+    props: [
+        'fishResult'
+    ],
     methods:{
         addFishResult () {
-            console.log('addFishResult');
             const resultDetail = {
                     length : null,
                     weight : null,
                     lure : null,
-                    caught_time: null
+                    catch_time: null
             };
             this.fishResult.push(resultDetail);
         },

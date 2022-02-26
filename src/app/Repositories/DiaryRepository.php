@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Diary;
-use Illuminate\Support\Facades\Log;
 
 class DiaryRepository implements Interfaces\DiaryRepositoryInterface
 {

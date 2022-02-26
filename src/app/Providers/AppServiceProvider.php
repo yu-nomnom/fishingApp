@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         );
         $this->app->bind(
             \App\Repositories\Interfaces\FishResultRepositoryInterface::class,
-            \App\Repositories\FishResultRepositoryInterface::class
+            \App\Repositories\FishResultRepository::class
         );
     }
 

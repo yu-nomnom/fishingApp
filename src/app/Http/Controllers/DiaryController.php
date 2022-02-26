@@ -32,6 +32,7 @@ class DiaryController extends Controller
     /**
      * 日記作成画面表示
      * 
+     * @return json
      */
     public function getCreateItem()
     {
@@ -50,17 +51,14 @@ class DiaryController extends Controller
 
     /**
      * 日記の作成・編集内容を登録
+     * 
      * @param Request $request
      */
     public function regist(Request $request)
     {
         $diaryData      = $request['dairyData'];
         $fishResultData = $request['fishResult'];
-        $diaryData      = $this->registDiaryService->formatRegisterData($diaryData);
-        $this->registDiaryService->createDiary($diaryData);
-
-        // 日記のIDが返ってくるようにしないとダメ
-        // $fishResultData = $this->fishResultService->formatRegisterData($fishResultData, $diaryId);
+        $this->registDiaryService->createDiary($diaryData, $fishResultData);
         return;
     }
 }

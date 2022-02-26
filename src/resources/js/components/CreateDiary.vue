@@ -54,7 +54,7 @@
                     <input v-model="dairyData.competition_flg" class="form-check-input" type="checkbox" id="competition_flg">
                     <label class="form-check-label">試合フラグ</label>
                 </div>
-                <FishResult />
+                <FishResult :fishResult="fishResult"></FishResult>
                 <div class="form-group">
                     <label>詳細</label>
                     <textarea v-model="dairyData.consideration" class="form-control" id="consideration" rows="10"></textarea>
@@ -94,7 +94,7 @@ export default {
             seasonList : [],
             tideList : [],
             fieldList : [],
-            forms: []
+            fishResult : [],
         }
     },
     mounted() {

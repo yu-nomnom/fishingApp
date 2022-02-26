@@ -8,7 +8,7 @@ interface FishResultRepositoryInterface
      * 釣果情報の新規登録
      * 
      * @param array $fishReultData
-     * @return object
+     * @return bool
      */
-    public function createFishResult (array $fishReultData);
+    public function insertFishResult (array $fishReultData);
 }
