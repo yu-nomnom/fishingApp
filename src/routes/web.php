@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/list', 'ListController@list');
-
-Route::get('/diary/create', 'DiaryController@create');
+Route::get('{any}', function () {
+    return view('index');
+})->where('any', '.*');
