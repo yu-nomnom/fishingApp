@@ -1,5 +1,8 @@
 <template>
     <div class="row justify-content-center">
+        <div class="alert alert-success" v-show="this.response.message">
+            {{ this.response.message }}
+        </div>
         <div class="col-md-8">
             <form>
                 <div class="form-group">
@@ -95,6 +98,7 @@ export default {
             tideList : [],
             fieldList : [],
             fishResult : [],
+            response: []
         }
     },
     mounted() {
@@ -118,7 +122,7 @@ export default {
                 fishResult: this.fishResult
             })
             .then((res) => {
-                console.log('bbbb');
+                this.response = res.data;
             });
         }
     }

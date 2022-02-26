@@ -58,21 +58,25 @@ class RegistDiaryService
      * 
      * @param array $diaryData 日記作成用データ
      * @param array $fishResultData 釣り日記用データ
-     * @return json
+     * @return string $message 登録の結果
      */
     public function createDiary(array $diaryData, array $fishResultData)
     {
         try {
+            $message = config('regist.fail');
             $diaryData = $this->formatRegisterData($diaryData);
             $result = $this->diaryRepository->createDiary($diaryData);
             $fishResultData = $this->fishResultService->formatRegisterData($fishResultData, $result->id);
             $success = $this->fishResultRepository->insertFishResult($fishResultData);
             if ($success) {
-                
+                $message = config('regist.success');
             }
         } catch (\Exception $e) {
-            //失敗jsonメッセージ
+            Log::error($e);
+            $message = config('regist.fail');
         }
+
+        return $message;
     }
 
     /**

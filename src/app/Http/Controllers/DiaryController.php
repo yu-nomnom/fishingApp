@@ -53,12 +53,16 @@ class DiaryController extends Controller
      * 日記の作成・編集内容を登録
      * 
      * @param Request $request
+     * @return json
      */
     public function regist(Request $request)
     {
         $diaryData      = $request['dairyData'];
         $fishResultData = $request['fishResult'];
-        $this->registDiaryService->createDiary($diaryData, $fishResultData);
-        return;
+        $message = $this->registDiaryService->createDiary($diaryData, $fishResultData);
+        return response()->json([
+            'status'  => 200,
+            'message' => $message
+        ]);
     }
 }
