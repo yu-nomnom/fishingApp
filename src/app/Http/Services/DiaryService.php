@@ -2,33 +2,27 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\FishResultService;
 use App\Repositories\Interfaces\DiaryRepositoryInterface;
 use App\Repositories\Interfaces\FishResultRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
-use PhpParser\Node\Stmt\TryCatch;
 
 /**
- * 日記の登録機能に関するクラス
+ * 日記に関するクラス
  */
-class RegistDiaryService
+class DiaryService
 {
-    private FishResultService $fishResultService;
     private DiaryRepositoryInterface $diaryRepository;
     private FishResultRepositoryInterface $fishResultRepository;
 
     /**
-     * @var FishResultService $fishResultService
      * @var DiaryRepositoryInterface $diaryRepository
      * @var FishResultRepositoryInterface $fishResultRepository
      */
     public function __construct(
-        FishResultService $fishResultService,
         DiaryRepositoryInterface $diaryRepository,
         FishResultRepositoryInterface $fishResultRepository
     ) {
-        $this->fishResultService = $fishResultService;
         $this->diaryRepository = $diaryRepository;
         $this->fishResultRepository = $fishResultRepository;
     }
@@ -39,7 +33,7 @@ class RegistDiaryService
      * @param array $diaryData
      * @return array $diaryData
      */
-    public function formatRegisterData(array $diaryData)
+    public function formatDiary(array $diaryData)
     {
         $dateTime = Carbon::now()->format('Y-m-d H:i:s');
         $diaryData += [
@@ -54,6 +48,31 @@ class RegistDiaryService
     }
 
     /**
+     * 日記の登録・編集時の釣果データ生成用
+     * 
+     * @param array $fishResultData 釣果データ
+     * @param int $diaryId 日記ID
+     * @return array $fishResultData 釣果データ
+     */
+    public function formatFishResult(array $fishResultData, int $diaryId)
+    {
+        $dateTime = Carbon::now()->format('Y-m-d H:i:s');
+        
+        foreach (array_keys($fishResultData) as $key) {
+            $fishResultData[$key] += [
+                'diary_id' => $diaryId,
+                'point_id' => null,
+                'created' => $dateTime,
+                'created_user_id' => 'yusuke', //後で変更
+                'modified' => $dateTime,
+                'modified_user_id' => 'yusuke' //後で変更
+            ];
+        }
+
+        return $fishResultData;
+    }
+
+    /**
      * 日記(釣果含む)新規保存処理
      * 
      * @param array $diaryData 日記作成用データ
@@ -64,9 +83,9 @@ class RegistDiaryService
     {
         try {
             $message = config('regist.fail');
-            $diaryData = $this->formatRegisterData($diaryData);
+            $diaryData = $this->formatDiary($diaryData);
             $result = $this->diaryRepository->createDiary($diaryData);
-            $fishResultData = $this->fishResultService->formatRegisterData($fishResultData, $result->id);
+            $fishResultData = $this->formatFishResult($fishResultData, $result->id);
             $success = $this->fishResultRepository->insertFishResult($fishResultData);
             if ($success) {
                 $message = config('regist.success');
@@ -85,5 +104,15 @@ class RegistDiaryService
     public function updateDiary()
     {
         return;
+    }
+
+    /**
+     * 日記の一覧画面を表示
+     * 
+     * @return array 日記の全一覧を返す
+     */
+    public function getAllDiary()
+    {
+        return $this->diaryRepository->getAllDiary();
     }
 }

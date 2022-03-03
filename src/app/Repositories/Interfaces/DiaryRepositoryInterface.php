@@ -11,4 +11,11 @@ interface DiaryRepositoryInterface
      * @return object
      */
     public function createDiary(array $diaryData);
+
+    /**
+     * 全ての日記を取得する
+     * 
+     * @return object 全ての日記データ
+     */
+    public function getAllDiary();
 }
