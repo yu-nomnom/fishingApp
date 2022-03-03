@@ -30,22 +30,34 @@ class DiaryController extends Controller
     }
 
     /**
+     * 日記一覧表示
+     * 
+     * @return json
+     */
+    public function diaryList()
+    {
+        Log::debug('diaryList');
+        //フィールド、天気、季節、潮などのリストも取得
+        $diaryCommonList   = $this->commonItemService->getDiaryCommonList();
+        Log::debug($diaryCommonList);
+
+        
+    }
+
+    /**
      * 日記作成画面表示
      * 
      * @return json
      */
     public function getCreateItem()
     {
-        $weatherList = config('item.weather');
-        $seasonList  = config('item.season');
-        $tideList    = config('item.tide');
-        $fieldList   = $this->commonItemService->getFieldList();
+        $diaryCommonList   = $this->commonItemService->getDiaryCommonList();
 
         return response()->json([
-                'weatherList' => $weatherList,
-                'seasonList' => $seasonList,
-                'tideList' => $tideList,
-                'fieldList' => $fieldList
+                'weatherList' => $diaryCommonList['weather'],
+                'seasonList'  => $diaryCommonList['season'],
+                'tideList'    => $diaryCommonList['tide'],
+                'fieldList'   => $diaryCommonList['field_list']
         ]);
     }
 

@@ -17,12 +17,21 @@ class CommonItemService
         $this->fieldRepository = $fieldRepository;
     }
     /**
-     * 釣り場リストの取得
-     * @return array $fieldList 釣り場リスト
+     * 日記一覧・新規作成・編集画面で必要な情報を取得
+     * 
+     * @return array $diaryCommonList 日記の作成・表示に必要なリスト
      */
-    public function getFieldList()
+    public function getDiaryCommonList()
     {
-        return $this->fieldRepository->getAllField();
+        $diaryCommonList = [];
+
+        //上から順に天気、季節、潮、フィールド一覧
+        $diaryCommonList['weather']    = config('item.weather');
+        $diaryCommonList['season']     = config('item.season');
+        $diaryCommonList['tide']       = config('item.tide');
+        $diaryCommonList['field_list'] = $this->fieldRepository->getAllField();
+
+        return $diaryCommonList;
     }
     
 }
