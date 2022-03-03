@@ -3,44 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\CommonItemService;
-use App\Http\Services\RegistDiaryService;
-use App\Http\Services\FishResultService;
+use App\Http\Services\DiaryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * 日記新規作成・編集画面のクラス
+ */
 class DiaryController extends Controller
 {
     private CommonItemService $commonItemService;
-    private RegistDiaryService $registDiaryService;
-    private FishResultService $fishResultService;
+    private DiaryService $diaryService;
 
     /**
      * @var CommonItemService $commonItemService
-     * @var RegistDiaryService $registDiaryService
-     * @var FishResultService $fishResultService
+     * @var DiaryService $diaryService
      */
     public function __construct(
         CommonItemService $commonItemService,
-        RegistDiaryService $registDiaryService,
-        FishResultService $fishResultService
+        DiaryService $diaryService,
     ) {
         $this->commonItemService = $commonItemService;
-        $this->registDiaryService = $registDiaryService;
-        $this->fishResultService = $fishResultService;
-    }
-
-    /**
-     * 日記一覧表示
-     * 
-     * @return json
-     */
-    public function diaryList()
-    {
-        Log::debug('diaryList');
-        //フィールド、天気、季節、潮などのリストも取得
-        $diaryCommonList   = $this->commonItemService->getDiaryCommonList();
-        
-        
+        $this->diaryService = $diaryService;
     }
 
     /**
@@ -70,7 +54,7 @@ class DiaryController extends Controller
     {
         $diaryData      = $request['dairyData'];
         $fishResultData = $request['fishResult'];
-        $message = $this->registDiaryService->createDiary($diaryData, $fishResultData);
+        $message = $this->diaryService->createDiary($diaryData, $fishResultData);
         return response()->json([
             'status'  => 200,
             'message' => $message

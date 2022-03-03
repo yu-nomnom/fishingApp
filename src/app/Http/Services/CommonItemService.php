@@ -5,6 +5,9 @@ namespace App\Http\Services;
 use App\Repositories\Interfaces\FieldRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * 共通で使用する配列・項目に関するクラス
+ */
 class CommonItemService
 {
     private FieldRepositoryInterface $fieldRepository;

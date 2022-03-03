@@ -16,4 +16,15 @@ class DiaryRepository implements Interfaces\DiaryRepositoryInterface
     {
         return Diary::create($diaryData);
     }
+
+    /**
+     * 全ての日記を取得する
+     * 
+     * @return object 全ての日記データ
+     */
+    public function getAllDiary()
+    {
+        return Diary::groupBy('id')
+                    ->paginate('10');
+    }
 }

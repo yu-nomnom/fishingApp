@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
 
 /**
- * 日記の登録機能に関するクラス
+ * 日記に関するクラス
  */
-class RegistDiaryService
+class DiaryService
 {
     private DiaryRepositoryInterface $diaryRepository;
     private FishResultRepositoryInterface $fishResultRepository;
@@ -104,5 +104,15 @@ class RegistDiaryService
     public function updateDiary()
     {
         return;
+    }
+
+    /**
+     * 日記の一覧画面を表示
+     * 
+     * @return array 日記の全一覧を返す
+     */
+    public function getAllDiary()
+    {
+        return $this->diaryRepository->getAllDiary();
     }
 }
