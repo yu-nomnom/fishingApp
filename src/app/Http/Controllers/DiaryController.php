@@ -39,8 +39,7 @@ class DiaryController extends Controller
         Log::debug('diaryList');
         //フィールド、天気、季節、潮などのリストも取得
         $diaryCommonList   = $this->commonItemService->getDiaryCommonList();
-        Log::debug($diaryCommonList);
-
+        
         
     }
 
