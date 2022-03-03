@@ -17,6 +17,7 @@ use App\Http\Controllers\DiaryController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/diary_list', 'DiaryController@diaryList');
 
 Route::get('/diary_create_item', 'DiaryController@getCreateItem');
 
