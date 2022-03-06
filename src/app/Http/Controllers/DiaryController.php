@@ -21,7 +21,7 @@ class DiaryController extends Controller
      */
     public function __construct(
         CommonItemService $commonItemService,
-        DiaryService $diaryService,
+        DiaryService $diaryService
     ) {
         $this->commonItemService = $commonItemService;
         $this->diaryService = $diaryService;
@@ -34,7 +34,7 @@ class DiaryController extends Controller
      */
     public function getCreateItem()
     {
-        $diaryCommonList   = $this->commonItemService->getDiaryCommonList();
+        $diaryCommonList = $this->commonItemService->getDiaryCommonList();
 
         return response()->json([
                 'weatherList' => $diaryCommonList['weather'],

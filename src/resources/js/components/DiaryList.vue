@@ -16,17 +16,19 @@ export default {
             seasonList : [],
             tideList : [],
             fieldList : [],
+            diaryList: []
         }
     },
     mounted() {
         window.onload = ()=>{
             console.log('aaaa');
             axios.get('/api/diary_list').then((res) => {
-                // var dataList = res['data'];
-                // this.weatherList = dataList['weatherList'];
-                // this.seasonList = dataList['seasonList'];
-                // this.tideList = dataList['tideList'];
-                // this.fieldList = dataList['fieldList'];
+                var dataList = res['data'];
+                this.weatherList = dataList['weatherList'];
+                this.seasonList = dataList['seasonList'];
+                this.tideList = dataList['tideList'];
+                this.fieldList = dataList['fieldList'];
+                this.diaryList = dataList['diaryList'];
             });
         }
     },
