@@ -34,16 +34,8 @@ class ListController extends Controller
      */
     public function diaryList()
     {
-        //フィールド、天気、季節、潮などのリストも取得
-        $diaryCommonList   = $this->commonItemService->getDiaryCommonList();
         $diaryList = $this->diaryService->getAllDiary();
 
-        return response()->json([
-            'weatherList' => $diaryCommonList['weather'],
-            'seasonList'  => $diaryCommonList['season'],
-            'tideList'    => $diaryCommonList['tide'],
-            'fieldList'   => $diaryCommonList['field_list'],
-            'diaryList'   => $diaryList
-        ]);
+        return $diaryList;
     }
 }

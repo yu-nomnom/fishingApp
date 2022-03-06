@@ -32,7 +32,7 @@ class DiaryController extends Controller
      * 
      * @return json
      */
-    public function getCreateItem()
+    public function getDiaryItem()
     {
         $diaryCommonList = $this->commonItemService->getDiaryCommonList();
 
