@@ -34,8 +34,8 @@ class ListController extends Controller
      */
     public function diaryList()
     {
-        $diaryList = $this->diaryService->getAllDiary();
+        $data = $this->diaryService->getAllDiary();
 
-        return $diaryList;
+        return $data;
     }
 }

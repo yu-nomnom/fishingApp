@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DiaryController;
+use Illuminate\Support\Facades\Log;
+use App\Models\Diary;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 //一覧表示
 Route::get('/diary_list', 'ListController@diaryList');
+// Route::get('/diary_list', function () {
+//     Log::debug('diary_list');
+//     $diary = Diary::all()->count();
+//     Log::debug(Diary::paginate($diary));
+//     return Diary::paginate($diary);
+// });
 //日記の共通項目取得用
 Route::get('/diary_item', 'DiaryController@getDiaryItem');
 //日記の新規保存用

@@ -74,7 +74,7 @@
 import FishResult from "./FishResult.vue";
 export default {
     components: { FishResult },
-    data()  {
+    data() {
         return {
             dairyData: {
                 title: '',

@@ -109,10 +109,12 @@ class DiaryService
     /**
      * 日記の一覧画面を表示
      * 
-     * @return array 日記の全一覧を返す
+     * @return array 日記データ
      */
     public function getAllDiary()
     {
-        return $this->diaryRepository->getAllDiary();
+        $diary['diaryList'] = $this->diaryRepository->getAllDiary();
+        $diary['diaryCount'] = $this->diaryRepository->countDiary();
+        return $diary;
     }
 }

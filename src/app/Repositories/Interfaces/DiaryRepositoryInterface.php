@@ -18,4 +18,11 @@ interface DiaryRepositoryInterface
      * @return object 全ての日記データ
      */
     public function getAllDiary();
+
+    /**
+     * 日記データの総数をカウントする
+     * 
+     * @return 
+     */
+    public function countDiary ();
 }
