@@ -22,7 +22,8 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.21.2",
-        "vue-router": "^3.5.3",
-        "vuetable-2": "^1.7.5"
+        "element-ui": "^2.15.6",
+        "vue-bootstrap4-table": "^1.1.11",
+        "vue-router": "^3.5.3"
     }
 }

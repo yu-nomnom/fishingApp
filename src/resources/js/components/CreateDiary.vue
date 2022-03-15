@@ -74,7 +74,7 @@
 import FishResult from "./FishResult.vue";
 export default {
     components: { FishResult },
-    data()  {
+    data() {
         return {
             dairyData: {
                 title: '',
@@ -103,7 +103,7 @@ export default {
     },
     mounted() {
         window.onload = ()=>{
-            axios.get('/api/diary_create_item').then((res) => {
+            axios.get('/api/diary_item').then((res) => {
                 var dataList = res['data'];
                 this.weatherList = dataList['weatherList'];
                 this.seasonList = dataList['seasonList'];

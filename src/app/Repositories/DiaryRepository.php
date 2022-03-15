@@ -24,7 +24,20 @@ class DiaryRepository implements Interfaces\DiaryRepositoryInterface
      */
     public function getAllDiary()
     {
-        return Diary::groupBy('id')
-                    ->paginate('10');
+        return Diary::leftJoin('field', 'diaries.field_id', '=', 'field.id')
+                    ->select('diaries.id', 'diaries.competition_flg', 'diaries.title', 'field.field_name as field',
+                             'diaries.season', 'diaries.weather', 'diaries.tide')
+                    ->get()
+                    ->toArray();
+    }
+
+    /**
+     * 日記データの総数をカウントする
+     * 
+     * @return 
+     */
+    public function countDiary ()
+    {
+        return Diary::count();
     }
 }
