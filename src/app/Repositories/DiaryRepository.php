@@ -24,7 +24,11 @@ class DiaryRepository implements Interfaces\DiaryRepositoryInterface
      */
     public function getAllDiary()
     {
-        return Diary::get()->toArray();
+        return Diary::leftJoin('field', 'diaries.field_id', '=', 'field.id')
+                    ->select('diaries.id', 'diaries.competition_flg', 'diaries.title', 'field.field_name as field',
+                             'diaries.season', 'diaries.weather', 'diaries.tide')
+                    ->get()
+                    ->toArray();
     }
 
     /**
