@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Services\CommonItemService;
 use App\Http\Services\DiaryService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 /**
  * 日記新規作成・編集画面のクラス
