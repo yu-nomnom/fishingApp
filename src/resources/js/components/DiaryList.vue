@@ -6,7 +6,6 @@
             :columns="columns"
             :config="config"
             :actions="actions"
-            @on-change-query="onChangeQuery"
             :total-rows="total_rows"
         >
             <template slot="sort-asc-icon">
@@ -18,13 +17,9 @@
             <template slot="no-sort-icon">
                 <i class="fa fa-sort">↕️</i>
             </template>
-            <template slot="paginataion-previous-button">
-                Previous
-            </template>
             <template slot="paginataion-next-button">
                 Next
             </template>
-
             <template slot="refresh-button-text">
                 Refresh
             </template>
@@ -116,12 +111,12 @@ export default {
             },
             config: {
                 server_mode: false,
-                pagination: true, // default true
-                pagination_info: false, // default true
-                num_of_visibile_pagination_buttons: 5, // default 5
-                per_page: 5, // default 10
+                pagination: true,
+                pagination_info: false, 
+                num_of_visibile_pagination_buttons: 5,
+                per_page: 10, 
                 per_page_options: [5, 10, 25, 50, 100],
-                preservePageOnDataChange: false // default false <- 検索したときにいたページを維持するか/しないか
+                preservePageOnDataChange: false
             },
             queryParams: {
                 sort: [],
@@ -134,12 +129,6 @@ export default {
         };
     },
     methods: {
-        onChangeQuery(queryParams) {
-            this.queryParams = queryParams;
-            console.log(this.queryParams);
-            this.fetchData();
-        },
-
         fetchData() {
             axios.get('/api/diary_list')
             .then((res) => {
