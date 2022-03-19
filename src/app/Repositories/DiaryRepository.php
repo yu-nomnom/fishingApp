@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Diary;
+use Illuminate\Support\Facades\DB;
 
 class DiaryRepository implements Interfaces\DiaryRepositoryInterface
 {
@@ -20,15 +21,17 @@ class DiaryRepository implements Interfaces\DiaryRepositoryInterface
     /**
      * 全ての日記を取得する
      * 
-     * @return object 全ての日記データ
+     * @return array 全ての日記データ
      */
     public function getAllDiary()
     {
-        return Diary::leftJoin('field', 'diaries.field_id', '=', 'field.id')
-                    ->select('diaries.id', 'diaries.competition_flg', 'diaries.title', 'field.field_name as field',
-                             'diaries.season', 'diaries.weather', 'diaries.tide')
-                    ->get()
-                    ->toArray();
+        $query = Diary::join('field', 'diaries.field_id', '=', 'field.id');
+
+        $raw = DB::raw("diaries.id, CASE diaries.competition_flg WHEN 1 THEN '○' ELSE null END AS competition_flg, 
+                        diaries.title, field.field_name as field, diaries.season, diaries.weather, diaries.tide");
+
+        return $query->select($raw)
+                     ->get()->toArray();
     }
 
     /**

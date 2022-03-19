@@ -115,6 +115,7 @@ class DiaryService
     {
         $diary['diaryList'] = $this->diaryRepository->getAllDiary();
         $diary['diaryCount'] = $this->diaryRepository->countDiary();
+
         return $diary;
     }
 }
