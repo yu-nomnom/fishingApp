@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\diaryRequest;
 use App\Http\Services\CommonItemService;
 use App\Http\Services\DiaryService;
 use Illuminate\Http\Request;
@@ -49,8 +50,9 @@ class DiaryController extends Controller
      * @param Request $request
      * @return json
      */
-    public function regist(Request $request)
+    public function regist(diaryRequest $request)
     {
+        \Log::debug($request);
         $diaryData      = $request['dairyData'];
         $fishResultData = $request['fishResult'];
         $message = $this->diaryService->createDiary($diaryData, $fishResultData);
