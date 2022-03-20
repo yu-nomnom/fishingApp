@@ -13,7 +13,7 @@ class DiaryRepository implements Interfaces\DiaryRepositoryInterface
      * @param array $diaryData
      * @return object
      */
-    public function createDiary(array $diaryData)
+    public function create(array $diaryData)
     {
         return Diary::create($diaryData);
     }

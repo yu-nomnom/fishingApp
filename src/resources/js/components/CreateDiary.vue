@@ -43,11 +43,6 @@
                     <input v-model="dairyData.highest_water_temperature" type="number" class="form-control" id="highest_temperature" placeholder="最高水温(℃)">
                 </div>
                 <div>
-                    <label>水位</label>
-                    <input v-model="dairyData.start_water_level" type="number" class="form-control" id="start_water_level" placeholder="開始水位(cm)">
-                    <input v-model="dairyData.end_water_level" type="number" class="form-control" id="end_water_level" placeholder="終了水位(cm)">
-                </div>
-                <div>
                     <label for="tide">潮</label>
                     <select name="tide" v-model="dairyData.tide" class="form-control">
                         <option v-for="tide in tideList" :key="tide" :value="tide">{{tide}}</option>
@@ -59,8 +54,12 @@
                 </div>
                 <FishResult :fishResult="fishResult"></FishResult>
                 <div class="form-group">
-                    <label>詳細</label>
-                    <textarea v-model="dairyData.consideration" class="form-control" id="consideration" rows="10"></textarea>
+                    <label>釣りの内容</label>
+                    <textarea v-model="contents" class="form-control" id="contents" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>考察</label>
+                    <textarea v-model="consideration" class="form-control" id="consideration" rows="5"></textarea>
                 </div>
                 <button type="button" class="btn btn-primary" @click="regist()">ボタン</button>
             </form>
@@ -87,12 +86,11 @@ export default {
                 highest_temperature: null,
                 lowest_water_temperature: null,
                 highest_water_temperature: null,
-                start_water_level: null,
-                end_water_level: null,
                 tide: '',
-                competition_flg: false,
-                consideration: '',
+                competition_flg: false
             },
+            contents: '',
+            consideration: '',
             weatherList : [],
             seasonList : [],
             tideList : [],
@@ -119,6 +117,8 @@ export default {
         regist() {
             axios.post('/api/diary_regist', {
                 dairyData:  this.dairyData,
+                contetns: this.contents,
+                consideration: this.consideration,
                 fishResult: this.fishResult
             })
             .then((res) => {

@@ -10,7 +10,7 @@ interface DiaryRepositoryInterface
      * @param array $diaryData
      * @return object
      */
-    public function createDiary(array $diaryData);
+    public function create(array $diaryData);
 
     /**
      * 全ての日記を取得する

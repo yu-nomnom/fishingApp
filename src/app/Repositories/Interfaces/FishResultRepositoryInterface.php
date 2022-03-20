@@ -10,5 +10,5 @@ interface FishResultRepositoryInterface
      * @param array $fishReultData
      * @return bool
      */
-    public function insertFishResult (array $fishReultData);
+    public function insert(array $fishReultData);
 }

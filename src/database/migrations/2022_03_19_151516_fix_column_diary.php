@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class FixColumnDiary extends Migration
 {
     /**
-     * 水位は削除する
+     * 水位と釣果IDは削除する
      * 気温・水温にnull ableを追加
      * 開始日時・終了日時、季節、天気のnull ableを廃止
      *
@@ -18,6 +18,7 @@ class FixColumnDiary extends Migration
         Schema::table('diaries', function (Blueprint $table) {
             $table->dropColumn('start_water_level');
             $table->dropColumn('end_water_level');
+            $table->dropColumn('fish_result_id');
 
             $table->text('lowest_temperature')->nullable()->change();
             $table->text('highest_temperature')->nullable()->change();
@@ -41,6 +42,7 @@ class FixColumnDiary extends Migration
         Schema::table('diaries', function (Blueprint $table) {
             $table->integer('start_water_level')->nullabke()->comment('開始時水位(cm)');
             $table->integer('end_water_level')->nullabke()->comment('終了時水位(cm)');
+            $table->integer('fish_result_id')->index()->comment('釣果ID');
 
             $table->text('lowest_temperature')->nullable(false)->change();
             $table->text('highest_temperature')->nullable(false)->change();
