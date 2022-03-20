@@ -10,9 +10,11 @@
                     <input v-model="dairyData.title" type="text" name="title" class="form-control" id="title" placeholder="この日の釣りの題名を入力">
                 </div>
                 <div>
-                    <label>釣り日時</label>
-                    <input v-model="dairyData.start_time" type="datetime-local" name="start_time" class="form-control" id="start_time" placeholder="釣り開始日時">
-                    <input v-model="dairyData.end_time" type="datetime-local" name="end_time" class="form-control" id="end_time" placeholder="釣り終了日時">
+                    <label>釣行日</label>
+                    <input v-model="dairyData.date" type="date" name="date" class="form-control" id="date" placeholder="釣行日">
+                    <label>釣りした時間</label>
+                    <input v-model="dairyData.start_time" type="time" name="start_time" class="form-control" id="start_time" placeholder="釣り開始時間">
+                    <input v-model="dairyData.end_time" type="time" name="end_time" class="form-control" id="end_time" placeholder="釣り終了時間">
                 </div>
                 <div>
                     <label>釣り場</label>
@@ -77,6 +79,7 @@ export default {
         return {
             dairyData: {
                 title: '',
+                date: '',
                 start_time: '',
                 end_time: '',
                 field_id: null,

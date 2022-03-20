@@ -52,12 +52,10 @@ class DiaryController extends Controller
      */
     public function regist(Request $request)
     {
-        \Log::debug($request);
         $diaryData      = $request['dairyData'];
-        $contents = $request['contetns'];
-        $consideration = $request['consideration'];
+        $contents       = $request['contetns'];
+        $consideration  = $request['consideration'];
         $fishResultData = $request['fishResult'];
-        \Log::debug('aaa');
         $message = $this->diaryService->createDiary($diaryData, $contents, $consideration, $fishResultData);
         return response()->json([
             'status'  => 200,

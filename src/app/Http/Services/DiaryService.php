@@ -48,6 +48,10 @@ class DiaryService
     {
         $dateTime = Carbon::now()->format('Y-m-d H:i:s');
 
+        $diaryData['start_time'] = $diaryData['date']. ' '. $diaryData['start_time'];
+        $diaryData['end_time'] = $diaryData['date']. ' '. $diaryData['end_time'];
+        unset($diaryData['date']);
+
         $diaryData += [
             'created' => $dateTime,
             'created_user_id' => 'yusuke', //後でユーザーを使用するように変更
@@ -142,34 +146,25 @@ class DiaryService
     {
         try {
             DB::beginTransaction();
-            \Log::debug('bbb');
             $message = config('regist.fail');
             //日記テーブル保存
             $diaryData = $this->formatDiary($diaryData);
-            \Log::debug('ccc');
             $diaryResult = $this->diaryRepository->create($diaryData);
 
-            \Log::debug('ddd');
             //釣り詳細テーブル保存
             $fishContentData = $this->formatFishContents($contents, $diaryResult->id);
-            \Log::debug($fishContentData);
-            \Log::debug('eee');
             $this->fishingContentsRepository->create($fishContentData);
-            \Log::debug('fff');
 
             //考察テーブル保存
             $fishConsiderationData = $this->formatFishConsideration($consideration, $diaryResult->id);
-            \Log::debug('xxxx');
             $this->fishingConsideRepositroy->create($fishConsiderationData);
 
             //釣果テーブル保存
             $success = false;
             if (!empty($fishResultData)) {
                 $fishResultData = $this->formatFishResult($fishResultData, $diaryResult->id);
-                \Log::debug('ggg');
                 $success = $this->fishResultRepository->insert($fishResultData);
             }
-            \Log::debug('hhh');
             if ($success) {
                 $message = config('regist.success');
             }
