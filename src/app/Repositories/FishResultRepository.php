@@ -12,7 +12,7 @@ class FishResultRepository implements Interfaces\FishResultRepositoryInterface
      * @param array $fishReultData
      * @return boolean
      */
-    public function insertFishResult (array $fishReultData)
+    public function insert(array $fishReultData)
     {
         return FishResult::insert($fishReultData);
     }

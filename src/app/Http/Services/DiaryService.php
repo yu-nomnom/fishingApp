@@ -4,6 +4,9 @@ namespace App\Http\Services;
 
 use App\Repositories\Interfaces\DiaryRepositoryInterface;
 use App\Repositories\Interfaces\FishResultRepositoryInterface;
+use App\Repositories\Interfaces\FishingContentsRepositoryInterface;
+use App\Repositories\Interfaces\FishingConsideRepositroyInterface;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
 
@@ -14,17 +17,25 @@ class DiaryService
 {
     private DiaryRepositoryInterface $diaryRepository;
     private FishResultRepositoryInterface $fishResultRepository;
+    private FishingContentsRepositoryInterface $fishingContentsRepository;
+    private FishingConsideRepositroyInterface $fishingConsideRepositroy;
 
     /**
      * @var DiaryRepositoryInterface $diaryRepository
      * @var FishResultRepositoryInterface $fishResultRepository
+     * @var FishingContentsRepositoryInterface $fishingContentsRepository
+     * @var FishingConsideRepositroyInterface $fishingConsideRepositroy
      */
     public function __construct(
         DiaryRepositoryInterface $diaryRepository,
-        FishResultRepositoryInterface $fishResultRepository
+        FishResultRepositoryInterface $fishResultRepository,
+        FishingContentsRepositoryInterface $fishingContentsRepository,
+        FishingConsideRepositroyInterface $fishingConsideRepositroy
     ) {
         $this->diaryRepository = $diaryRepository;
         $this->fishResultRepository = $fishResultRepository;
+        $this->fishingContentsRepository = $fishingContentsRepository;
+        $this->fishingConsideRepositroy = $fishingConsideRepositroy;
     }
 
     /**
@@ -36,8 +47,12 @@ class DiaryService
     public function formatDiary(array $diaryData)
     {
         $dateTime = Carbon::now()->format('Y-m-d H:i:s');
+
+        $diaryData['start_time'] = $diaryData['date']. ' '. $diaryData['start_time'];
+        $diaryData['end_time'] = $diaryData['date']. ' '. $diaryData['end_time'];
+        unset($diaryData['date']);
+
         $diaryData += [
-            'fish_result_id' => 1, //後で修正
             'created' => $dateTime,
             'created_user_id' => 'yusuke', //後でユーザーを使用するように変更
             'modified' => $dateTime,
@@ -45,6 +60,52 @@ class DiaryService
         ];
 
         return $diaryData;
+    }
+
+    /**
+     * 釣りの内容テーブルのデータ生成用
+     * 
+     * @param string $contents 詳細
+     * @param int $diaryId 日記ID
+     * @return array $fishContentData
+     */
+    public function formatFishContents(string $contents, int $diaryId)
+    {
+        $dateTime = Carbon::now()->format('Y-m-d H:i:s');
+
+        $fishContentData = [
+            'diary_id' => $diaryId,
+            'contents' => $contents,
+            'created' => $dateTime,
+            'created_user_id' => 'yusuke', //後でユーザーを使用するように変更
+            'modified' => $dateTime,
+            'modified_user_id' => 'yusuke' //後でユーザーを使用するように変更
+        ];
+
+        return $fishContentData;
+    }
+
+    /**
+     * 考察テーブルのデータ生成用
+     * 
+     * @param string $consideration 考察
+     * @param int $diaryId 日記ID
+     * @return array $fishConsiderationData
+     */
+    public function formatFishConsideration(string $consideration, int $diaryId)
+    {
+        $dateTime = Carbon::now()->format('Y-m-d H:i:s');
+
+        $fishConsiderationData = [
+            'diary_id' => $diaryId,
+            'consideration' => $consideration,
+            'created' => $dateTime,
+            'created_user_id' => 'yusuke', //後でユーザーを使用するように変更
+            'modified' => $dateTime,
+            'modified_user_id' => 'yusuke' //後でユーザーを使用するように変更
+        ];
+
+        return $fishConsiderationData;
     }
 
     /**
@@ -73,24 +134,43 @@ class DiaryService
     }
 
     /**
-     * 日記(釣果含む)新規保存処理
+     * 日記(釣果含む)の新規保存処理
      * 
      * @param array $diaryData 日記作成用データ
-     * @param array $fishResultData 釣り日記用データ
+     * @param string $contents 釣りの内容
+     * @param string $consideration 考察
+     * @param array $fishResultData 釣果データ
      * @return string $message 登録の結果
      */
-    public function createDiary(array $diaryData, array $fishResultData)
+    public function createDiary(array $diaryData, string $contents, string $consideration, array $fishResultData)
     {
         try {
+            DB::beginTransaction();
             $message = config('regist.fail');
+            //日記テーブル保存
             $diaryData = $this->formatDiary($diaryData);
-            $result = $this->diaryRepository->createDiary($diaryData);
-            $fishResultData = $this->formatFishResult($fishResultData, $result->id);
-            $success = $this->fishResultRepository->insertFishResult($fishResultData);
+            $diaryResult = $this->diaryRepository->create($diaryData);
+
+            //釣り詳細テーブル保存
+            $fishContentData = $this->formatFishContents($contents, $diaryResult->id);
+            $this->fishingContentsRepository->create($fishContentData);
+
+            //考察テーブル保存
+            $fishConsiderationData = $this->formatFishConsideration($consideration, $diaryResult->id);
+            $this->fishingConsideRepositroy->create($fishConsiderationData);
+
+            //釣果テーブル保存
+            $success = false;
+            if (!empty($fishResultData)) {
+                $fishResultData = $this->formatFishResult($fishResultData, $diaryResult->id);
+                $success = $this->fishResultRepository->insert($fishResultData);
+            }
             if ($success) {
                 $message = config('regist.success');
             }
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollback();
             Log::error($e);
             $message = config('regist.fail');
         }

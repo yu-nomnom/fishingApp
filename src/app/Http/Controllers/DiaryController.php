@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\diaryRequest;
 use App\Http\Services\CommonItemService;
 use App\Http\Services\DiaryService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 /**
  * 日記新規作成・編集画面のクラス
@@ -53,8 +53,10 @@ class DiaryController extends Controller
     public function regist(Request $request)
     {
         $diaryData      = $request['dairyData'];
+        $contents       = $request['contetns'];
+        $consideration  = $request['consideration'];
         $fishResultData = $request['fishResult'];
-        $message = $this->diaryService->createDiary($diaryData, $fishResultData);
+        $message = $this->diaryService->createDiary($diaryData, $contents, $consideration, $fishResultData);
         return response()->json([
             'status'  => 200,
             'message' => $message

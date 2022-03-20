@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Field;
-use Illuminate\Support\Facades\Log;
 
 class FieldRepository implements Interfaces\FieldRepositoryInterface
 {
