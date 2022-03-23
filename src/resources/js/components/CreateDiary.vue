@@ -41,8 +41,8 @@
                 </div>
                 <div>
                     <label>水温</label>
-                    <input v-model="dairyData.lowest_water_temperature" type="number"  class="form-control" id="lowest_temperature" placeholder="最低水温(℃)">
-                    <input v-model="dairyData.highest_water_temperature" type="number" class="form-control" id="highest_temperature" placeholder="最高水温(℃)">
+                    <input v-model="dairyData.lowest_water_temperature" type="number"  class="form-control" id="lowest_water_temperature" placeholder="最低水温(℃)">
+                    <input v-model="dairyData.highest_water_temperature" type="number" class="form-control" id="highest_water_temperature" placeholder="最高水温(℃)">
                 </div>
                 <div>
                     <label for="tide">潮</label>
@@ -126,6 +126,10 @@ export default {
             })
             .then((res) => {
                 this.response = res.data;
+            })
+            .catch((e) => {
+                console.log(e.response.data);
+                console.log(e.response.data.errors);
             });
         }
     }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\diaryRequest;
 use App\Http\Services\CommonItemService;
 use App\Http\Services\DiaryService;
-use Illuminate\Http\Request;
 
 /**
  * 日記新規作成・編集画面のクラス
@@ -47,11 +46,12 @@ class DiaryController extends Controller
     /**
      * 日記の作成・編集内容を登録
      * 
-     * @param Request $request
+     * @param diaryRequest $request
      * @return json
      */
-    public function regist(Request $request)
+    public function regist(diaryRequest $request)
     {
+        \Log::debug('regist');
         $diaryData      = $request['dairyData'];
         $contents       = $request['contetns'];
         $consideration  = $request['consideration'];
