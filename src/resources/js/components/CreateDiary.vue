@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-center">
-        <div class="alert alert-success" v-show="this.response.message">
-            {{ this.response.message }}
+        <div class="alert alert-danger" v-for="error in errors" :key="error">
+            {{ error }}
         </div>
         <div class="col-md-8">
             <form>
@@ -99,7 +99,8 @@ export default {
             tideList : [],
             fieldList : [],
             fishResult : [],
-            response: []
+            status: null,
+            errors: []
         }
     },
     mounted() {
@@ -124,12 +125,21 @@ export default {
                 consideration: this.consideration,
                 fishResult: this.fishResult
             })
-            .then((res) => {
-                this.response = res.data;
+            .then((response) => {
+                console.log('success');
             })
-            .catch((e) => {
-                console.log(e.response.data);
-                console.log(e.response.data.errors);
+            .catch((response) => {
+                console.log('error');
+                this.status = response.response.status;
+                let errorObject = response.response.data.errors;
+
+                let keyNum = 0;
+                let errorList = [];
+                Object.entries(errorObject).forEach(([key, value], index) => {
+                    errorList[keyNum] = value[0];
+                    ++keyNum;
+                });
+                this.errors = errorList;
             });
         }
     }
