@@ -51,7 +51,6 @@ class DiaryController extends Controller
      */
     public function regist(diaryRequest $request)
     {
-        \Log::debug('regist');
         $diaryData      = $request['dairyData'];
         $contents       = $request['contetns'];
         $consideration  = $request['consideration'];

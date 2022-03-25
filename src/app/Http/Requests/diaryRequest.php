@@ -94,8 +94,39 @@ class diaryRequest extends FormRequest
             'dairyData.tide'                      => ['required', $tideValidate],
             'dairyData.competition_flg'           => ['boolean'],
             'dairyData.contents'                  => ['max:10000'],
-            'dairyData.consideration'             => ['max:10000']
+            'dairyData.consideration'             => ['max:10000'],
+            
+            // 'fishResult.length'  => [],
+            // 'fishResult.weight'  => [],
+            // 'fishResult.lure'    => [],
+            // 'fishResult.catch_time' => []  
         ];
+    }
+
+    /**
+     * 釣果内容のためのバリデーション
+     * 
+     * @return 
+     */
+    public function withValidator(Validator $validator)
+    {
+        //まず配列の中身が空だった場合はバリデーションを通過させる。
+        $fishResult = $this->input('fishResult');
+        if (!empty($fishResult)) {
+            $this->lengthValid($fishResult);
+        }
+    }
+
+    /**
+     * 
+     */
+    public function lengthValid($fishResult)
+    {
+        if (empty($fishResult['length'])) {
+            return '最高気温の値が最低気温を下回ってます。';
+        }
+        if (preg_match('//', $fishResult['length'])) {}
+        
     }
 
     /**
@@ -118,8 +149,9 @@ class diaryRequest extends FormRequest
     }
 
     /**
+     * エラー内容ををjsonResponseで返すための関数
      * 
-     * 
+     * @return HttpResponseException エラー情報など
      */
     public function failedValidation(Validator $validator)
     {
