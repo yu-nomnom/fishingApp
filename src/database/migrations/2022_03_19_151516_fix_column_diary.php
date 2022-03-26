@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 class FixColumnDiary extends Migration
 {
     /**
+     * Run the migrations.
+     * 
      * @return void
      */
     public function up()
@@ -36,6 +38,8 @@ class FixColumnDiary extends Migration
     }
 
     /**
+     * Reverse the migrations.
+     * 
      * @return void
      */
     public function down()
