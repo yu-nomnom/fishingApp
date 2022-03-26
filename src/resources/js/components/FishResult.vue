@@ -7,7 +7,7 @@
                 長さ
                 </div>
                 <div class="form-component_content">
-                    <input type="number" v-model="result.length" placeholder="長さ(cm)">
+                    <input type="number" step="0.5" min="0" v-model="result.length" placeholder="長さ(cm)">
                 </div>
             </div>
             <div class="form-component">
@@ -15,7 +15,7 @@
                 重さ
                 </div>
                 <div class="form-component_content">
-                    <input type="number" v-model="result.weight" placeholder="重さ(cm)">
+                    <input type="number" min="0" v-model="result.weight" placeholder="重さ(g)">
                 </div>
             </div>
             <div class="form-component">

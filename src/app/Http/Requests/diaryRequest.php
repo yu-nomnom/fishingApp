@@ -95,38 +95,113 @@ class diaryRequest extends FormRequest
             'dairyData.competition_flg'           => ['boolean'],
             'dairyData.contents'                  => ['max:10000'],
             'dairyData.consideration'             => ['max:10000'],
-            
-            // 'fishResult.length'  => [],
-            // 'fishResult.weight'  => [],
-            // 'fishResult.lure'    => [],
-            // 'fishResult.catch_time' => []  
         ];
     }
 
     /**
      * 釣果内容のためのバリデーション
      * 
+     * @param Validator $validator
      * @return 
      */
     public function withValidator(Validator $validator)
     {
-        //まず配列の中身が空だった場合はバリデーションを通過させる。
-        $fishResult = $this->input('fishResult');
-        if (!empty($fishResult)) {
-            $this->lengthValid($fishResult);
+        //配列の中身が空だった場合はバリデーションを通過させる。
+        $fishResultList = $this->input('fishResult');
+        if (!empty($fishResultList)) {
+            foreach ($fishResultList as $key => $fishResult) {
+                $lengthMessage = $this->lengthValid($fishResult, $key);
+                if (!empty($lengthMessage)) {
+                    $validator->errors()->add('fishResult'. $key. 'length', $lengthMessage);
+                }
+                $weightMessage = $this->weightValid($fishResult, $key);
+                if (!empty($weightMessage)) {
+                    $validator->errors()->add('fishResult'. $key. 'weight', $weightMessage);
+                }
+                $lureMessage = $this->lureValid($fishResult, $key);
+                if (!empty($lureMessage)) {
+                    $validator->errors()->add('fishResult'. $key. 'lure', $lureMessage);
+                }
+                $catchTimeMessage = $this->catchTimeValid($fishResult, $key);
+                if (!empty($catchTimeMessage)) {
+                    $validator->errors()->add('fishResult'. $key. 'catchTime', $catchTimeMessage);
+                }
+            }
         }
     }
 
     /**
+     * 釣果欄の 長さ のバリデーション
      * 
+     * @param $fishResult 釣果データ
+     * @param $key 行数
+     * @return string|null エラーメッセージ
      */
-    public function lengthValid($fishResult)
+    public function lengthValid($fishResult, $key)
     {
         if (empty($fishResult['length'])) {
-            return '最高気温の値が最低気温を下回ってます。';
+            return '釣果欄の'. $key+1 .'行目の長さの値が空です';
         }
-        if (preg_match('//', $fishResult['length'])) {}
-        
+        // (少数点含む)数値で0-79.5
+        if (preg_match('/^([1-7][0-9]{0,2}|0)(\.[0-9])?$/', $fishResult['length'])) {
+            return '釣果欄の'. $key+1 .'行目の長さの値が間違っています';
+        }
+
+        return null;
+    }
+
+    /**
+     * 釣果欄の 重さ のバリデーション
+     * 
+     * @param $fishResult 釣果データ
+     * @param $key 行数
+     * @return string エラーメッセージ
+     */
+    public function weightValid($fishResult, $key)
+    {
+        if (empty($fishResult['weight'])) {
+            return '釣果欄の'. $key+1 .'行目の重さの値が空です';
+        }
+        // 数値で 100-10000
+        if (preg_match('/[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|10000/', $fishResult['weight'])) {
+            return '釣果欄の'. $key+1 .'行目の重さの値が間違っています';
+        }
+    }
+
+    /**
+     * 釣果欄の ルアー のバリデーション
+     * 
+     * @param $fishResult 釣果データ
+     * @param $key 行数
+     * @return string エラーメッセージ
+     */
+    public function lureValid($fishResult, $key)
+    {
+        if (empty($fishResult['lure'])) {
+            return '釣果欄の'. $key+1 .'行目のルアーの値が空です';
+        }
+        // 200文字以内
+        if (mb_strlen($fishResult['lure']) > 200 ) {
+            return '釣果欄の'. $key+1 .'行目のルアーが文字数オーバーです';
+        }
+    }
+
+    /**
+     * 釣果欄の 釣れた時間 のバリデーション
+     * 
+     * @param $fishResult 釣果データ
+     * @param $key 行数
+     * @return string エラーメッセージ
+     */
+    public function catchTimeValid($fishResult, $key)
+    {
+        if (empty($fishResult['catch_time'])) {
+            return '釣果欄の'. $key+1 .'行目の釣れた時間の値が空です';
+        }
+        // 何時何分の表記であること
+        if (preg_match('/|\d{2}\:\d{2}|/', $fishResult['catch_time'])) {
+            return '釣果欄の'. $key+1 .'行目の釣れた時間の値が間違っています';
+        }
     }
 
     /**
@@ -149,7 +224,7 @@ class diaryRequest extends FormRequest
     }
 
     /**
-     * エラー内容ををjsonResponseで返すための関数
+     * エラー内容を jsonResponse で返すための関数
      * 
      * @return HttpResponseException エラー情報など
      */
@@ -158,7 +233,7 @@ class diaryRequest extends FormRequest
         $response = response()->json([
             'errors' => $validator->errors(),
         ], 422);
-        \Log::debug($response);
+
         throw new HttpResponseException($response);
     }
 }
