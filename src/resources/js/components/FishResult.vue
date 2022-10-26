@@ -7,7 +7,7 @@
                 長さ
                 </div>
                 <div class="form-component_content">
-                    <input type="number" step="0.5" min="0" v-model="result.length" placeholder="長さ(cm)">
+                    <input type="number" name="length" step="0.5" min="0" v-model="result.length" placeholder="長さ(cm)">
                 </div>
             </div>
             <div class="form-component">
@@ -15,7 +15,7 @@
                 重さ
                 </div>
                 <div class="form-component_content">
-                    <input type="number" min="0" v-model="result.weight" placeholder="重さ(g)">
+                    <input type="number" name="weight" min="0" v-model="result.weight" placeholder="重さ(g)">
                 </div>
             </div>
             <div class="form-component">
@@ -23,7 +23,7 @@
                 ルアー
                 </div>
                 <div class="form-component_content">
-                    <input type="text" v-model="result.lure" placeholder="例)スピナーベイトなど">
+                    <input type="text" name="lure" v-model="result.lure" placeholder="例)スピナーベイトなど">
                 </div>
             </div>
             <div class="form-component">
@@ -31,7 +31,7 @@
                 釣れた時間
                 </div>
                 <div class="form-component_content">
-                    <input v-model="result.catch_time" type="time" class="form-control">
+                    <input type="time" name="catch_time" v-model="result.catch_time" class="form-control">
                 </div>
             </div>
         </div>
